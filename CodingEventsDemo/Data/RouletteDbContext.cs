@@ -1,9 +1,9 @@
-﻿using CodingEventsDemo.Models;
+﻿using Roulette_Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace CodingEventsDemo.Data
+namespace Roulette_Identity.Data
 {
     public class RouletteDbContext : IdentityDbContext<IdentityUser>
     {

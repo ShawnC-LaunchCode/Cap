@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using CodingEventsDemo.Models;
+using Roulette_Identity.Models;
 
-namespace CodingEventsDemo.Controllers
+namespace Roulette_Identity.Controllers
 {
     public class HomeController : Controller
     {

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace CodingEventsDemo.Migrations
+namespace Roulette_Identity.Migrations
 {
     public partial class AddIdentityUser : Migration
     {

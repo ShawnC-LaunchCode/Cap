@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace CodingEventsDemo.Migrations
+namespace Roulette_Identity.Migrations
 {
     public partial class AddsEventTag : Migration
     {

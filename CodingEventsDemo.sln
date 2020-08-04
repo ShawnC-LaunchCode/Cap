@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roulette_Cap", "CodingEventsDemo\Roulette_Cap.csproj", "{B72982CA-6747-4B8E-A1EE-2E9EA0F4548A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Roulette_Identity", "CodingEventsDemo\Roulette_Identity.csproj", "{B72982CA-6747-4B8E-A1EE-2E9EA0F4548A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

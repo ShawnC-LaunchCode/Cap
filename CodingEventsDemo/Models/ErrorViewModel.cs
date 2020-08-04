@@ -1,6 +1,6 @@
 using System;
 
-namespace CodingEventsDemo.Models
+namespace Roulette_Identity.Models
 {
     public class ErrorViewModel
     {

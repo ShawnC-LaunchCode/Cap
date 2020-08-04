@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace CodingEventsDemo
+namespace Roulette_Identity
 {
     public class Program
     {

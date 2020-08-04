@@ -1,0 +1,202 @@
+﻿@model Roulette_Identity.ViewModels.RouletteViewModel;
+
+<style>
+    table, th, td {
+        border: 2px solid black;
+        text-align: center;
+    }
+
+    .empty {
+        border: hidden;
+    }
+
+    .green {
+        background-color: forestgreen;
+        color: black;
+        font-weight: 800;
+        font-family: 'Comic Sans MS';
+    }
+
+    .red {
+        background-color: red;
+        color: black;
+        font-weight: 800;
+    }
+
+    .black {
+        background-color: black;
+        color: white;
+    }
+
+    #container {
+        position: relative;
+    }
+
+    #LastSpinNumber {
+        position: absolute;
+        left: 170px;
+        top: 275px;
+        background-color: deeppink;
+        font-size: 50px;
+    }
+
+    #BetSubmit {
+        border: solid black 2px;
+    }
+</style>
+
+<h1>Welcome to the roulette Table!</h1>
+
+
+<div>
+    <table>
+        @*<col>*@
+        <colgroup span="2"></colgroup>
+        <colgroup span="2"></colgroup>
+        <colgroup span="2"></colgroup>
+        <colgroup span="2"></colgroup>
+        <colgroup span="2"></colgroup>
+        <tr class="green">
+            <th colspan="1" rowspan="2">Good Luck!</th>
+            <th colspan="2" scope="colgroup">1 to 18</th>
+            <th colspan="2" scope="colgroup">EVEN</th>
+            <th colspan="2" scope="colgroup">RED</th>
+            <th colspan="2" scope="colgroup">BLACK</th>
+            <th colspan="2" scope="colgroup">ODD</th>
+            <th colspan="2" scope="colgroup">19 to 36</th>
+
+        </tr>
+        <tr class="green">
+
+            <th colspan="4" scope="colgroup">1st 12</th>
+            <th colspan="4" scope="colgroup">2nd 12</th>
+            <th colspan="4" scope="colgroup">3rd 12</th>
+
+        </tr>
+        <tr>
+            <td class="green" rowspan="3" width="60">0</td>
+            <td class="red" width="45">1</td>
+            <td class="black" width="45">4</td>
+            <td class="red" width="45">7</td>
+            <td class="black" width="45">10</td>
+            <td class="red" width="45">13</td>
+            <td class="black" width="45">16</td>
+            <td class="red" width="45">19</td>
+            <td class="black" width="45">22</td>
+            <td class="red" width="45">25</td>
+            <td class="black" width="45">28</td>
+            <td class="red" width="45">31</td>
+            <td class="black" width="45">34</td>
+        </tr>
+        <tr>
+
+            <td class="black">2</td>
+            <td class="red">5</td>
+            <td class="black">8</td>
+            <td class="red">11</td>
+            <td class="black">14</td>
+            <td class="red">17</td>
+            <td class="black">20</td>
+            <td class="red">23</td>
+            <td class="black">26</td>
+            <td class="red">29</td>
+            <td class="black">32</td>
+            <td class="red">35</td>
+        </tr>
+        <tr>
+
+            <td class="red">3</td>
+            <td class="black">6</td>
+            <td class="red">9</td>
+            <td class="black">12</td>
+            <td class="red">15</td>
+            <td class="black">18</td>
+            <td class="red">21</td>
+            <td class="black">24</td>
+            <td class="red">27</td>
+            <td class="black">30</td>
+            <td class="red">33</td>
+            <td class="black">36</td>
+
+        </tr>
+    </table>
+</div>
+
+<div>
+    <img id="container" width="150" src="https://www.rebalance360.com/wp-content/uploads/2018/02/retirement_roulette.jpg" />
+    <div id="LastSpinNumber">
+        @Model.LastSpinNumber
+    </div>
+</div>
+<p>Place as many bets as you would like then click spin wheel!</p>
+<p>If you run out of money, just click reset bank to go back to $5000</p>
+<div>
+    <label>Name:</label>
+    <text>@Model.Player.Username</text>
+</div>
+<div>
+    <label>Bank:</label>
+    <text>@Model.Player.Bank</text>
+</div>
+<form method="post" id="BetSubmit" controller="Roulette" action="/Roulette/PlaceBet">
+    <span class="form-group">
+        <label for="betAmount">Amount to bet:</label>
+        <input name="betAmount" id="betAmount" type="number" value="@Model.BetAmount" />
+    </span>
+    <span>
+        <label for="betType">On what? </label>
+        <select name="betType" id="betType" for="betType">
+            @{
+                for (int i = 0; i < 37; i++)
+                {
+                    <option value="@i">@i</option>
+                }
+            }
+            @*<option value="evens">Evens</option>*@
+        </select>
+    </span>
+    <input type="submit" value="Place Bet" />
+</form>
+<form method="post" action="/Roulette/ResetBets">
+    <input type="submit" value="Reset Bets" />
+</form>
+<form method="post" action="/Roulette/SpinWheel">
+    <input type="submit" value="Spin Wheel" />
+</form>
+
+<form method="post" action="/Roulette/ResetBank">
+    <input type="submit" value="Reset Bank" />
+</form>
+
+
+
+@if (Model.Bets.Count != 0)
+{
+    <table class="table">
+        <tr>
+            <th>
+                Bet Amount
+            </th>
+            <th>
+                On What
+            </th>
+        </tr>
+       
+        @*@foreach (var bet in Model.Bets)
+        {
+            Bet thisBet = bet;
+            <tr>
+                <td>
+                    @thisBet.Amount
+                </td>
+                <td>
+                    @thisBet.Type
+                </td>
+            </tr>
+        }*@
+    </table>
+}
+else
+{
+    <h3>-No bets yet</h3>
+}
