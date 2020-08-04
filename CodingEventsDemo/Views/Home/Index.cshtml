@@ -1,5 +1,23 @@
-﻿
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>To MoonBurn Casino!</p>
 </div>
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    <h1>@User.Identity.ToString()</h1>
+    <h1>@User.Identity.IsAuthenticated</h1>
+}
+else
+{
+    <h1> No one is logged in</h1>
+}
+
