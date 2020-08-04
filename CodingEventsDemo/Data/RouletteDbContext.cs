@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CodingEventsDemo.Data
 {
-    public class EventDbContext : IdentityDbContext<IdentityUser>
+    public class RouletteDbContext : IdentityDbContext<IdentityUser>
     {
         
 
-        public EventDbContext(DbContextOptions<EventDbContext> options)
+        public RouletteDbContext(DbContextOptions<RouletteDbContext> options)
             : base(options)
         {
         }

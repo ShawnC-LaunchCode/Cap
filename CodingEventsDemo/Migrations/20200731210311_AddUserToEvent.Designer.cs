@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CodingEventsDemo.Migrations
 {
-    [DbContext(typeof(EventDbContext))]
+    [DbContext(typeof(RouletteDbContext))]
     [Migration("20200731210311_AddUserToEvent")]
     partial class AddUserToEvent
     {
