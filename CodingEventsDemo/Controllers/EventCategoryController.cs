@@ -24,8 +24,8 @@ namespace CodingEventsDemo.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            List<EventCategory> categories = context.Categories.ToList();
-            return View(categories);
+            
+            return View();
         }
 
         [HttpGet]
@@ -45,7 +45,7 @@ namespace CodingEventsDemo.Controllers
                     Name = addEventCategoryViewModel.Name
                 };
 
-                context.Categories.Add(newCategory);
+                
                 context.SaveChanges();
 
                 return Redirect("/EventCategory");
