@@ -38,49 +38,18 @@ namespace Roulette_Identity.Controllers
         public IActionResult Index()//everything to display to user 
         {
             string userId = _userManager.GetUserId(User);
-            //TODO generate name and bank from User
 
-
-            //thisZebra=which zebra has this ssn?
-
-            List<Zebra> list = context.Zebras
+            List<Zebra> list = context.Zebras//which zebra has right ssn? pull current data from persistant
                 //.Include(z => z.SSN)
                 .Where(z => z.SSN == userId)
                 .ToList();
-
-
 
             Console.WriteLine(list);
 
             if (list.Count() == 0)
             {
-               
-
                 return Redirect("/User");
             }
-
-
-
-
-
-
-            //Zebra theUser = context.Zebras.ToLookup(z=> z.SSN == (_userManager.GetUserId(User)));
-
-            //var specialZebra = from z in context.Zebras
-            //                   join u in context.Users
-            //                   on z.SSN equals u.UserName
-            //                   where u.UserName == z.SSN
-            //                   select z;
-            //Console.WriteLine((Zebra)specialZebra);
-
-
-
-            //if(theUser.Username==null){
-            //    Redirect("/Users/Add");
-            //}
-
-            //go get zebra
-
 
             RouletteViewModel viewModel = new RouletteViewModel
             {
@@ -94,23 +63,19 @@ namespace Roulette_Identity.Controllers
             return View(viewModel);
         }
 
-
         [HttpPost]
         public IActionResult PlaceBet(int betAmount, string betType)
         {
             if (betAmount <= user.Bank)
             {
-
                 user.Bank -= betAmount;
                 Bet bet = new Bet
                 {
                     Amount = betAmount,
                     Type = betType
                 };
-
                 bets.Add(bet);
             }
-
             return Redirect("/Roulette");
         }
 
@@ -121,8 +86,6 @@ namespace Roulette_Identity.Controllers
             {
                 user.Bank += bet.Amount;
             }
-
-
             bets.Clear();
             return Redirect("/Roulette");
         }
@@ -133,7 +96,6 @@ namespace Roulette_Identity.Controllers
             LastSpin = NewNumber();
             PayBets();
             bets.Clear();
-
             return Redirect("/Roulette");
         }
 
@@ -167,7 +129,7 @@ namespace Roulette_Identity.Controllers
                     betCatagory = betType;
                 }
 
-                switch (betCatagory)
+                switch (betCatagory) //switch to be ready for adding outside bets
                 {
                     case 0://inside bets
 

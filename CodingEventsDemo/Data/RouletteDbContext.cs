@@ -9,6 +9,7 @@ namespace Roulette_Identity.Data
     {
         
         public DbSet<Zebra> Zebras { get; set;}
+        public DbSet<Bet> Bets { get; set; }
 
 
         public RouletteDbContext(DbContextOptions<RouletteDbContext> options)
