@@ -13,9 +13,11 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Roulette_Identity.Controllers
 {
+    [Authorize]
     public class RouletteController : Controller
 
     {
@@ -25,14 +27,28 @@ namespace Roulette_Identity.Controllers
         //these can be stored in context
         private static List<Bet> bets = new List<Bet>();
         private static int LastSpin = 0;
-        private static Zebra user = new Zebra("Shawn", 5000);
+        private static Zebra user;
+       
+
 
 
 
         public RouletteController(RouletteDbContext dbContext, UserManager<IdentityUser> userManager)
         {
+            
             context = dbContext;
             _userManager = userManager;
+
+            //string userId = _userManager.GetUserId(User);
+
+            //List<Zebra> list = context.Zebras//which zebra has right ssn? pull current data from persistant
+            //   //.Include(z => z.SSN)
+            //   .Where(z => z.SSN == userId)
+            //   .ToList();
+
+            //user = list[0];
+
+
         }
 
         public IActionResult Index()//everything to display to user 
@@ -44,12 +60,15 @@ namespace Roulette_Identity.Controllers
                 .Where(z => z.SSN == userId)
                 .ToList();
 
-            Console.WriteLine(list);
+            
+
 
             if (list.Count() == 0)
             {
                 return Redirect("/User");
             }
+
+            user = list[0];
 
             RouletteViewModel viewModel = new RouletteViewModel
             {
@@ -66,9 +85,20 @@ namespace Roulette_Identity.Controllers
         [HttpPost]
         public IActionResult PlaceBet(int betAmount, string betType)
         {
+            string userId = _userManager.GetUserId(User);
+
+            List<Zebra> list = context.Zebras//which zebra has right ssn? pull current data from persistant
+                //.Include(z => z.SSN)
+                .Where(z => z.SSN == userId)
+                .ToList();
+
+            user = list[0];
+
             if (betAmount <= user.Bank)
             {
-                user.Bank -= betAmount;
+                context.Zebras.Find(user.Id).Bank -= betAmount;
+                context.SaveChanges();
+                //user.Bank -= betAmount;
                 Bet bet = new Bet
                 {
                     Amount = betAmount,
@@ -82,9 +112,21 @@ namespace Roulette_Identity.Controllers
         [HttpPost]
         public IActionResult ResetBets()
         {
+            string userId = _userManager.GetUserId(User);
+
+            List<Zebra> list = context.Zebras//which zebra has right ssn? pull current data from persistant
+                                             //.Include(z => z.SSN)
+                .Where(z => z.SSN == userId)
+                .ToList();
+
+            user = list[0];
+
+
             foreach (Bet bet in bets)
             {
-                user.Bank += bet.Amount;
+                context.Zebras.Find(user.Id).Bank += bet.Amount;
+                context.SaveChanges();
+                //user.Bank += bet.Amount;
             }
             bets.Clear();
             return Redirect("/Roulette");
@@ -102,7 +144,9 @@ namespace Roulette_Identity.Controllers
         [HttpPost]
         public IActionResult ResetBank()
         {
-            user.Bank = 5000;
+            context.Zebras.Find(user.Id).Bank = 5000;
+            context.SaveChanges();
+            //user.Bank = 5000;
             bets.Clear();
             return Redirect("/Roulette");
         }
@@ -135,8 +179,11 @@ namespace Roulette_Identity.Controllers
 
                         if (betType == LastSpin)
                         {
-                            user.Bank += bet.Amount * 35;
+                            context.Zebras.Find(user.Id).Bank += bet.Amount * 35;
+                            context.SaveChanges();
+                            //user.Bank += bet.Amount * 35;
                         }
+                        
                         break;
 
                     default:
