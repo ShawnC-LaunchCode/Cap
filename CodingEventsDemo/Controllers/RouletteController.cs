@@ -9,6 +9,10 @@ using Roulette_Identity.Data;
 using Roulette_Identity.ViewModels;
 using Roulette_Identity.Models;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore.Internal;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace Roulette_Identity.Controllers
 {
@@ -21,7 +25,9 @@ namespace Roulette_Identity.Controllers
         //these can be stored in context
         private static List<Bet> bets = new List<Bet>();
         private static int LastSpin = 0;
-        private static User user = new User("Shawn", 5000);
+        private static Zebra user = new Zebra("Shawn", 5000);
+
+
 
         public RouletteController(RouletteDbContext dbContext, UserManager<IdentityUser> userManager)
         {
@@ -31,15 +37,59 @@ namespace Roulette_Identity.Controllers
 
         public IActionResult Index()//everything to display to user 
         {
-            var userId = _userManager.GetUserId(User);
+            string userId = _userManager.GetUserId(User);
             //TODO generate name and bank from User
+
+
+            //thisZebra=which zebra has this ssn?
+
+            List<Zebra> list = context.Zebras
+                //.Include(z => z.SSN)
+                .Where(z => z.SSN == userId)
+                .ToList();
+
+
+
+            Console.WriteLine(list);
+
+            if (list.Count() == 0)
+            {
+               
+
+                return Redirect("/User");
+            }
+
+
+
+
+
+
+            //Zebra theUser = context.Zebras.ToLookup(z=> z.SSN == (_userManager.GetUserId(User)));
+
+            //var specialZebra = from z in context.Zebras
+            //                   join u in context.Users
+            //                   on z.SSN equals u.UserName
+            //                   where u.UserName == z.SSN
+            //                   select z;
+            //Console.WriteLine((Zebra)specialZebra);
+
+
+
+            //if(theUser.Username==null){
+            //    Redirect("/Users/Add");
+            //}
+
+            //go get zebra
+
 
             RouletteViewModel viewModel = new RouletteViewModel
             {
+                UserId = userId,
                 Bets = bets,
-                BetAmount = 10,
-                Player = user,
-                LastSpinNumber = LastSpin
+                BetAmount = 50,
+                Player = list[0],
+                LastSpinNumber = LastSpin,
+                ZebraId=list[0].Id
             };
             return View(viewModel);
         }

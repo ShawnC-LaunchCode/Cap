@@ -8,6 +8,8 @@ namespace Roulette_Identity.Data
     public class RouletteDbContext : IdentityDbContext<IdentityUser>
     {
         
+        public DbSet<Zebra> Zebras { get; set;}
+
 
         public RouletteDbContext(DbContextOptions<RouletteDbContext> options)
             : base(options)

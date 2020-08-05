@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Roulette_Identity.Data;
 
 namespace Roulette_Identity.Migrations
 {
     [DbContext(typeof(RouletteDbContext))]
-    partial class RouletteDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200805132754_AddZebra")]
+    partial class AddZebra
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,9 +226,6 @@ namespace Roulette_Identity.Migrations
 
                     b.Property<string>("SSN")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
-
-                    b.Property<int>("UserLevel")
-                        .HasColumnType("int");
 
                     b.Property<string>("Username")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
