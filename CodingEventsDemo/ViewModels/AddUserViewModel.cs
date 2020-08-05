@@ -9,7 +9,7 @@ namespace Roulette_Identity.ViewModels
     {
         public string SSN { get; set; }
 
-        public string PreferedDisplayName { get; set; }
+        public string Name { get; set; }
 
         public AddUserViewModel()
         {

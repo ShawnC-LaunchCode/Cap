@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Roulette_Identity.Data;
+using Roulette_Identity.Models;
+using Roulette_Identity.ViewModels;
 
 namespace Roulette_Identity.Controllers
 {
@@ -12,14 +14,58 @@ namespace Roulette_Identity.Controllers
     {
         private RouletteDbContext context;
         private readonly UserManager<IdentityUser> _userManager;
+        private Zebra user;
         public IActionResult Index() 
         {
+            string userId = _userManager.GetUserId(User);
+
+            List<Zebra> list = context.Zebras//which zebra has right ssn? pull current data from persistant
+                                             //.Include(z => z.SSN)
+                .Where(z => z.SSN == userId)
+                .ToList();
+
+
+            if (list.Count() == 0)
+            {
+                AddUserViewModel viewModel = new AddUserViewModel();
+                return View("/User/Add", viewModel);
+            }
+
+
             return View();
         }
 
         public IActionResult Add()
         {
-            return View();
+            string userId = _userManager.GetUserId(User);
+
+            //List<Zebra> list = context.Zebras//which zebra has right ssn? pull current data from persistant
+            //                                 //.Include(z => z.SSN)
+            //    .Where(z => z.SSN == userId)
+            //    .ToList();
+            //user = list[0];
+
+            AddUserViewModel viewModel = new AddUserViewModel
+            {
+                SSN = userId,
+
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Add(AddUserViewModel addUserViewModel)
+        {
+            context.Zebras.Add(new Zebra
+            {
+                SSN = addUserViewModel.SSN,
+                Username = addUserViewModel.Name,
+                Bank = 5000,
+                UserLevel=1
+            });
+            context.SaveChanges();
+            return Redirect("/Roulette");
         }
 
         public UserController(RouletteDbContext dbContext, UserManager<IdentityUser> userManager)

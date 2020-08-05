@@ -1,5 +1,14 @@
 ﻿@model Roulette_Identity.ViewModels.AddUserViewModel
 
-<h1> Add user here!</h1>
+<h1> Welcome To MoonBurn Casino!</h1>
 
-<h2>@Model.SSN</h2>
+<h2>Since you are new here, what name would you like to be called?</h2>
+
+<form method="post" action="/User/Add">
+   <label for="Name">Name:</label>
+   <input name="Name" />
+    <input type="hidden" name="SSN" value="@Model.SSN"/>
+
+    <input type="submit"/>
+</form>
+

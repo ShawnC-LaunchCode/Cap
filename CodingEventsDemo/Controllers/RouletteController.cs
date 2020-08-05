@@ -65,7 +65,7 @@ namespace Roulette_Identity.Controllers
 
             if (list.Count() == 0)
             {
-                return Redirect("/User");
+                return Redirect("/User/Add");
             }
 
             user = list[0];
