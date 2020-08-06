@@ -25,14 +25,23 @@ namespace Roulette_Identity.Controllers
                 .ToList();
 
 
-            if (list.Count() == 0)
+            if (list.Count() == 0)//identity user created, but no zebra
             {
                 AddUserViewModel viewModel = new AddUserViewModel();
                 return View("/User/Add", viewModel);
             }
 
 
-            return View();
+            List<Zebra> viewList = context.Zebras.ToList();
+                
+
+
+
+
+
+
+
+            return View(viewList);
         }
 
         public IActionResult Add()
@@ -66,6 +75,22 @@ namespace Roulette_Identity.Controllers
             });
             context.SaveChanges();
             return Redirect("/Roulette");
+        }
+
+
+        public IActionResult Edit(int zebraId)
+        {
+            Zebra toEdit = context.Zebras.Find(zebraId);
+
+            return View(toEdit);
+        }
+
+        [HttpPost]
+        public IActionResult Edit (Zebra editedZebra)
+        {
+
+
+            return Redirect("/User");
         }
 
         public UserController(RouletteDbContext dbContext, UserManager<IdentityUser> userManager)

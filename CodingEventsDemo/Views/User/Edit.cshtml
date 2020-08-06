@@ -1,0 +1,11 @@
+﻿@model Zebra
+
+<form method="post" action="/User/Edit">
+    <label for="Username">Username:</label>
+    <input name="Username" value="@Model.Username"/>
+
+    <label for="Bank">Bank:</label>
+    <input name="Bank" value="@Model.Bank"/>
+
+    <input type="submit"/>
+</form>
