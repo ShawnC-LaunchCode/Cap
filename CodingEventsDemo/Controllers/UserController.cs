@@ -88,7 +88,9 @@ namespace Roulette_Identity.Controllers
         [HttpPost]
         public IActionResult Edit (Zebra editedZebra)
         {
-
+            context.Zebras.Find(editedZebra.Id).Username = editedZebra.Username;
+            context.Zebras.Find(editedZebra.Id).Bank = editedZebra.Bank;
+            context.SaveChanges();
 
             return Redirect("/User");
         }
